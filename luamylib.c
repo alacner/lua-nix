@@ -10,6 +10,18 @@
 #define luaL_register(a, b, c) luaL_openlib((a), (b), (c), 0)
 #endif
 
+static int Lpwd (lua_State *L) {
+    char pwd[1024];
+    getcwd(pwd, sizeof(pwd));
+    if (pwd) {
+        lua_pushstring(L, pwd);
+        return 1;
+    } else {
+        lua_pushnil(L);
+        return 1;
+    }
+}
+
 static int Lgetpid (lua_State *L) {
     int pid;
     pid = getpid();
@@ -32,6 +44,7 @@ static int Lsleep (lua_State *L) {
 static const luaL_reg mylib[] = {
     { "getpid",   Lgetpid },
     { "sleep",   Lsleep },
+    { "pwd",   Lpwd },
     { NULL, NULL }
 };
 
