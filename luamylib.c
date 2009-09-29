@@ -42,9 +42,6 @@ static int Lpathinfo (lua_State *L) {
     const char *path = luaL_checkstring(L, 1);
 
     if (path) {
-
-        lua_pushboolean(L, 1);
-
         dn = dirname(strdup(path)); 
         bn = basename(strdup(path)); 
         ext = strrchr(bn, '.'); 
@@ -58,7 +55,7 @@ static int Lpathinfo (lua_State *L) {
         } else {
             lua_pushnil(L);
         }
-        return 4;
+        return 3;
     } else {
         lua_pushnil(L);
         return 1;
