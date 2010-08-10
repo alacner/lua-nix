@@ -17,3 +17,4 @@ for i=1,5 do
     nix.sleep(1)
     print(pid)
 end
+print(nix.microtime())
