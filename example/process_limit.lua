@@ -1,6 +1,6 @@
 --[[
  * limit the process numbers
- * this process is only can use in linux system and with mylib
+ * this process is only can use in linux system and with nix 
  * author: alacner zhang <alacner@gmail.com>
 
  example:
@@ -10,7 +10,7 @@
 --]]
 
 require "print_r"
-require "mylib"
+require "nix"
 
 function process_limit(...)
     local process, number, debug, path = ...
@@ -102,7 +102,7 @@ function process_limit(...)
         debug(string.format("process list: %s", table.concat(pids, ',')))
     end
     
-    local this_pid = mylib.getpid()
+    local this_pid = nix.getpid()
     table.insert(pids, this_pid)  
     debug(string.format("current pid: %d", this_pid))
     if args.number >= #pids then
@@ -118,4 +118,4 @@ end
 
 --process_limit(arg[0])
 --process_limit(arg, 2)
---mylib.sleep(2200000)
+--nix.sleep(2200000)

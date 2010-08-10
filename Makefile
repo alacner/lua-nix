@@ -1,4 +1,4 @@
-# luamylib - some funcs in Lua
+# luanix - some funcs in Lua
 # (c) 2009-10 Alacner zhang <alacner@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -28,7 +28,7 @@
 
 # Name of .pc file. "lua5.1" on Debian/Ubuntu
 LUAPKG = lua5.1
-CFLAGS = `pkg-config $(LUAPKG) --cflags` -O3 -Wall
+CFLAGS = `pkg-config $(LUAPKG) --cflags` -O3 -Wall #if x64 -fPIC
 INSTALL_PATH = `pkg-config $(LUAPKG) --variable=INSTALL_CMOD`
 LIBS = `pkg-config $(LUAPKG) --libs`
 
@@ -41,17 +41,17 @@ LIBS = `pkg-config $(LUAPKG) --libs`
 #INSTALL_PATH = /usr/lib/lua/5.1
 
 
-mylib.so: luamylib.c
-	$(CC) -o mylib.so -shared $(LIBS) $(CFLAGS) luamylib.c
+nix.so: luanix.c
+	$(CC) -o nix.so -shared $(LIBS) $(CFLAGS) luanix.c
 
-install: mylib.so
+install: nix.so
 	make test
-	install -s mylib.so $(INSTALL_PATH)
+	install -s nix.so $(INSTALL_PATH)
 
 clean:
-	$(RM) mylib.so
+	$(RM) nix.so
 
-test: mylib.so test_mylib.lua
-	lua test_mylib.lua
+test: nix.so test_nix.lua
+	lua test_nix.lua
 
-all: mylib.so
+all: nix.so

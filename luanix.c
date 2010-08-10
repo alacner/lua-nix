@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/time.h>
 
 #include <lua.h>
 #include <lauxlib.h>
@@ -12,6 +13,7 @@
 #if LUA_VERSION_NUM < 501
 #define luaL_register(a, b, c) luaL_openlib((a), (b), (c), 0)
 #endif
+#define MICRO_IN_SEC 1000000.00
 
 static int Lpwd (lua_State *L) {
     char pwd[1024];
@@ -69,15 +71,25 @@ static int Lsleep (lua_State *L) {
     return 1;
 }
 
-static const luaL_reg mylib[] = {
+static int Lmicrotime (lua_State *L) {
+    struct timeval tp = {0};
+    if (gettimeofday(&tp, NULL)) {
+	lua_pushboolean(L, 0);
+    }
+    lua_pushnumber(L, (double)(tp.tv_sec + tp.tv_usec / MICRO_IN_SEC));
+    return 1;
+}
+
+static const luaL_reg nix[] = {
     { "getpid",   Lgetpid },
     { "sleep",   Lsleep },
     { "pwd",   Lpwd },
     { "pathinfo",   Lpathinfo },
+    { "microtime",   Lmicrotime },
     { NULL, NULL }
 };
 
-int luaopen_mylib(lua_State *L) {
-    luaL_register(L, "mylib", mylib);
+int luaopen_nix(lua_State *L) {
+    luaL_register(L, "nix", nix);
     return 0;
 }

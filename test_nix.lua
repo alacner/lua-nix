@@ -1,19 +1,19 @@
-require "mylib"
+require "nix"
 
-local pwd = mylib.pwd()
+local pwd = nix.pwd()
 print(pwd)
 
 local path = '/root/a/b/c/d.html'
-local dn,bn,ext = mylib.pathinfo(path)
+local dn,bn,ext = nix.pathinfo(path)
 print(path)
 print(dn)
 print(bn)
 print(ext)
 
-local pid = mylib.getpid()
+local pid = nix.getpid()
 print(pid)
 
 for i=1,5 do
-    mylib.sleep(1)
+    nix.sleep(1)
     print(pid)
 end
