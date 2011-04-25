@@ -26,6 +26,12 @@
 #CC = gcc
 #RM = rm
 
+ifeq ($(V),64)
+    IS64=-fPIC 
+else
+    IS64=
+endif
+
 # Name of .pc file. "lua5.1" on Debian/Ubuntu
 LUAPKG = lua5.1
 CFLAGS = `pkg-config $(LUAPKG) --cflags` -O3 -Wall #if x64 -fPIC
@@ -39,10 +45,10 @@ LIBS = `pkg-config $(LUAPKG) --libs`
 #CFLAGS = -I/usr/include/lua5.1/ -O3 -Wall
 #LIBS = -llua5.1
 #INSTALL_PATH = /usr/lib/lua/5.1
-
+HASH = libs/hash/lua_hash_crc32.c libs/hash/lua_hash_md.c
 
 nix.so: luanix.c
-	$(CC) -o nix.so -shared $(LIBS) $(CFLAGS) luanix.c
+	$(CC) -o nix.so -shared $(HASH) $(LIBS) $(CFLAGS) $(IS64) luanix.c
 
 install: nix.so
 	make test

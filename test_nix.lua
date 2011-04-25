@@ -10,11 +10,18 @@ print(dn)
 print(bn)
 print(ext)
 
+print(nix.microtime())
+
+print(nix.md5(12345));
+print(nix.md5(12345, 1));
+
+print(nix.crc32(12345));
+print(nix.crc32(12345, 1));
+
 local pid = nix.getpid()
 print(pid)
 
-for i=1,5 do
+for i=1,3 do
     nix.sleep(1)
     print(pid)
 end
-print(nix.microtime())
