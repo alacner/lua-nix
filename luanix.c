@@ -153,5 +153,5 @@ static const luaL_reg nix[] = {
 
 int luaopen_nix(lua_State *L) {
     luaL_register(L, "nix", nix);
-    return 0;
+    return 1;
 }
