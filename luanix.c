@@ -11,6 +11,13 @@
 #include "libs/hash/lua_hash_md.h"
 #include "libs/hash/lua_hash_crc32.h"
 
+/* Compatibility between Lua 5.1+ and Lua 5.0 */
+#ifndef LUA_VERSION_NUM
+#define LUA_VERSION_NUM 0
+#endif
+#if LUA_VERSION_NUM < 501
+#define luaL_register(a, b, c) luaL_openlib((a), (b), (c), 0)
+#endif
 #define MICRO_IN_SEC 1000000.00
 
 static int Lpwd (lua_State *L) {
@@ -145,6 +152,6 @@ static const luaL_reg nix[] = {
 };
 
 int luaopen_nix(lua_State *L) {
-    luaL_openlib(L, "nix", nix, 0);
+    luaL_register(L, "nix", nix);
     return 0;
 }
